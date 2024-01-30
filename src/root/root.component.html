@@ -1,0 +1,10 @@
+<div *ngIf = "vediHome == true">
+  <h1> Gestione Biblioteca </h1>  
+  <button (click)="mostraRicerca()">Ricerca</button>
+  <br>
+  <button (click)="mostraInserimento()">Inserimento</button>
+</div>
+<app-inserimento [vediInserimento]="vediInserimento"></app-inserimento>
+<button *ngIf = "vediEsciInserimento == true" (click)="tornaHomeInserimento()">Esci</button>
+<app-ricerca [vediRicerca]="vediRicerca"></app-ricerca>
+<button *ngIf = "vediEsciRicerca == true" (click)="tornaHomeInserimento()">Esci</button>

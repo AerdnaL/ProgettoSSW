@@ -1,3 +1,9 @@
-<p *ngIf="vediInserimento">
-inserimento works!
-</p>
+<div *ngIf="vediInserimento">
+  <h2>Inserimento di un nuovo documento</h2>
+  <p>Autore: <input type="text" [(ngModel)]="inputAutore"></p>
+  <p>Titolo: <input type="text" [(ngModel)]="inputTitolo"></p>
+  <p>Posizione: <input type="text" [(ngModel)]="inputPosizione">
+  <br>
+  <br>
+  <button (click)="carica()">Inserisci</button>
+</div>

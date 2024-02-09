@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InserimentoComponent } from './inserimento/inserimento.component';
 import { RicercaComponent } from './ricerca/ricerca.component';
+import { BibliotecaService } from './biblioteca.service';
+
 
 @Component({
   selector: 'app-root',
@@ -9,8 +11,10 @@ import { RicercaComponent } from './ricerca/ricerca.component';
   styleUrls: ['./root.component.css'],
   standalone: true,
   imports: [CommonModule, InserimentoComponent, RicercaComponent,],
+  providers: [BibliotecaService]
 })
 export class RootComponent implements OnInit {
+  
   vediHome: boolean = true;
   vediRicerca: boolean = false;
   vediInserimento: boolean = false;

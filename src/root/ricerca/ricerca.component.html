@@ -1,3 +1,6 @@
-<p *ngIf = "vediRicerca == true">
-ricerca works!
-</p>
+<div *ngIf = "vediRicerca == true">
+  <h2>Ricerca di un documento</h2>
+  <input type="text" (keyup)="cercaLibro($event)">
+  <p *ngIf = "occorrenze !== ''">Trovati {{ occorrenze }} libri</p>
+</div>
+<br>

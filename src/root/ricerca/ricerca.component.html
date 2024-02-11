@@ -1,6 +1,6 @@
-<div *ngIf = "vediRicerca == true">
+<div *ngIf = "vediRicerca == true && occorrenze !== 1">
   <h2>Ricerca di un documento</h2>
   <input type="text" (keyup)="cercaLibro($event)">
   <p *ngIf = "occorrenze !== ''">Trovati {{ occorrenze }} libri</p>
 </div>
-<br>
+<app-trovato-libero [occorrenze]="occorrenze" [cercato]="cercato"></app-trovato-libero>

@@ -25,9 +25,7 @@ export class RicercaComponent implements OnInit {
             libro.autore.toLowerCase().includes((event.target as HTMLInputElement).value) ||
             libro.titolo.toLowerCase().includes((event.target as HTMLInputElement).value)
         );
-        console.log(cercato);
-        let prova = (event.target as HTMLInputElement).value;
-        console.log(prova);
+        this.occorrenze = cercato.length;
       },
     });
   }

@@ -1,10 +1,12 @@
 <div *ngIf = "occorrenze == 1">
   <h2>Titolo del libro</h2>
-  <p>Placeholder Autore</p>
-  <p>Placeholder Titolo</p>
-  <p>Placeholder Posizione</p>
+  <p>Autore: {{ cercato[0].autore }}</p>
+  <p>Titolo: {{ cercato[0].titolo }}</p>
+  <p>Posizione: {{ cercato[0].posizione }}</p>
   <h3>Prestito</h3>
   <p>Nominativo: <input type="text"></p>
   <h3>Rimozione</h3>
   <button>Rimuovi</button>
+  <br>
+  <br>
 </div>

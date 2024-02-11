@@ -11,7 +11,7 @@ import { AutoriLibri } from '../../autori-libri';
 })
 export class TrovatoLiberoComponent implements OnInit {
   @Input() occorrenze: any;
-  @Input() cercato: AutoriLibri | undefined;
+  @Input() cercato: any;
 
   constructor() { }
 

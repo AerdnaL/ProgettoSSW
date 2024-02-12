@@ -38,10 +38,10 @@ export class InserimentoComponent implements OnInit {
     });
   }
 
-  @Output() EventoNascondiInserimento = new EventEmitter<boolean>();
+  @Output() eventoNascondiInserimento = new EventEmitter<boolean>();
 
   EmettinascondiInserimento(valore: boolean) {
-    this.EventoNascondiInserimento.emit(valore);
+    this.eventoNascondiInserimento.emit(valore);
   }
 
   constructor(private bs: BibliotecaService) { }

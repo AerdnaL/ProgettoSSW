@@ -18,6 +18,7 @@ export class RootComponent implements OnInit {
 
   mostraInserimento() {
     this.vediInserimento = true;
+    this.vediRicerca = false;
   }
 
   nascondiInserimento(valore: boolean) {
@@ -26,6 +27,7 @@ export class RootComponent implements OnInit {
 
   mostraRicerca() {
     this.vediRicerca = true;
+    this.vediInserimento = false;
   }
 
   nascondiRicerca(valore: boolean) {

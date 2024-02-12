@@ -41,10 +41,10 @@ export class RicercaComponent implements OnInit {
     });
   }
 
-  @Output() EventoNascondiRicerca = new EventEmitter<boolean>();
+  @Output() eventoNascondiRicerca = new EventEmitter<boolean>();
 
   EmettiNascondiRicerca(valore: boolean) {
-    this.EventoNascondiRicerca.emit(valore);
+    this.eventoNascondiRicerca.emit(valore);
   }
 
 

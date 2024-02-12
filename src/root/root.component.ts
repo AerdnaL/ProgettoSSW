@@ -13,7 +13,7 @@ import { BibliotecaService } from './biblioteca.service';
   providers: [BibliotecaService],
 })
 export class RootComponent implements OnInit {
-  vediRicerca: boolean = false;
+  vediRicerca?: boolean;
   vediInserimento?: boolean;
 
   mostraInserimento() {
@@ -26,6 +26,10 @@ export class RootComponent implements OnInit {
 
   mostraRicerca() {
     this.vediRicerca = true;
+  }
+
+  nascondiRicerca(valore: boolean) {
+    this.vediRicerca = valore;
   }
 
   constructor() {}

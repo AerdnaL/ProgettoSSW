@@ -9,6 +9,8 @@
     (EventoNascondiInserimento)="nascondiInserimento($event)"
   ></app-inserimento>
 </div>
-<app-ricerca [vediRicerca]="vediRicerca"></app-ricerca>
-<!--<button *ngIf = "vediEsciInserimento == true" (click)="tornaHomeInserimento()">Esci</button>-->
-<!--<button *ngIf = "vediEsciRicerca == true" (click)="tornaHomeRicerca(); clearArray()">Esci</button>-->
+<div *ngIf="vediRicerca">
+  <app-ricerca
+    (EventoNascondiRicerca)="nascondiRicerca($event)"
+  ></app-ricerca>
+</div>

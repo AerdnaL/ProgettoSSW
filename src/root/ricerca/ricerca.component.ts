@@ -41,6 +41,13 @@ export class RicercaComponent implements OnInit {
     });
   }
 
+  @Output() EventoNascondiRicerca = new EventEmitter<boolean>();
+
+  EmettiNascondiRicerca(valore: boolean) {
+    this.EventoNascondiRicerca.emit(valore);
+  }
+
+
   constructor(private bs: BibliotecaService) {}
 
   ngOnInit() {}

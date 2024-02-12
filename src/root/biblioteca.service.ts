@@ -31,5 +31,4 @@ export class BibliotecaService {
       body: JSON.stringify(ilDato)
     });
   }
-
 }

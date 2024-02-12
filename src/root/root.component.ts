@@ -18,8 +18,12 @@ export class RootComponent implements OnInit {
   vediHome: boolean = true;
   vediRicerca: boolean = false;
   vediInserimento: boolean = false;
+  vediRicercaLibero: boolean = false;
+  vediRicercaPrestato: boolean = false;
   vediEsciRicerca: boolean = false;
   vediEsciInserimento: boolean = false;
+
+  occorrenze: number = 0;
 
   mostraInserimento() {
     this.vediInserimento = true;
@@ -43,7 +47,13 @@ export class RootComponent implements OnInit {
     this.vediRicerca = false;
     this.vediEsciRicerca = false;
     this.vediHome = true;
+    this.vediRicercaLibero = false;
+    this.vediRicercaPrestato = false;
+    this.occorrenze = 0;
+    console.log(this.occorrenze);
   }
+
+  clearArray(){}
 
   constructor() { }
 

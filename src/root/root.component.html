@@ -6,5 +6,5 @@
 </div>
 <app-inserimento [vediInserimento]="vediInserimento"></app-inserimento>
 <button *ngIf = "vediEsciInserimento == true" (click)="tornaHomeInserimento()">Esci</button>
-<app-ricerca [vediRicerca]="vediRicerca"></app-ricerca>
-<button *ngIf = "vediEsciRicerca == true" (click)="tornaHomeRicerca()">Esci</button>
+<app-ricerca [vediRicerca]="vediRicerca" [vediRicercaLibero]="vediRicercaLibero" [occorrenze]="occorrenze"></app-ricerca>
+<button *ngIf = "vediEsciRicerca == true" (click)="tornaHomeRicerca(); clearArray()">Esci</button>

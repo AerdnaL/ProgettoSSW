@@ -1,10 +1,14 @@
-<div *ngIf = "vediHome == true">
-  <h1> Gestione Biblioteca </h1>  
+<div>
+  <h1>Gestione Biblioteca</h1>
   <button (click)="mostraRicerca()">Ricerca</button>
-  <br>
+  <br />
   <button (click)="mostraInserimento()">Inserimento</button>
 </div>
-<app-inserimento [vediInserimento]="vediInserimento"></app-inserimento>
-<button *ngIf = "vediEsciInserimento == true" (click)="tornaHomeInserimento()">Esci</button>
-<app-ricerca [vediRicerca]="vediRicerca" [vediRicercaLibero]="vediRicercaLibero" [occorrenze]="occorrenze"></app-ricerca>
-<button *ngIf = "vediEsciRicerca == true" (click)="tornaHomeRicerca(); clearArray()">Esci</button>
+<div *ngIf="vediInserimento">
+  <app-inserimento
+    (EventoNascondiInserimento)="nascondiInserimento($event)"
+  ></app-inserimento>
+</div>
+<app-ricerca [vediRicerca]="vediRicerca"></app-ricerca>
+<!--<button *ngIf = "vediEsciInserimento == true" (click)="tornaHomeInserimento()">Esci</button>-->
+<!--<button *ngIf = "vediEsciRicerca == true" (click)="tornaHomeRicerca(); clearArray()">Esci</button>-->

@@ -1,4 +1,4 @@
-<div *ngIf="vediInserimento">
+<div>
   <h2>Inserimento di un nuovo documento</h2>
   <p>Autore: <input type="text" [(ngModel)]="inputAutore"></p>
   <p>Titolo: <input type="text" [(ngModel)]="inputTitolo"></p>
@@ -6,4 +6,7 @@
   <br>
   <br>
   <button (click)="carica()">Inserisci</button>
+  <br>
+  <br>
+  <button (click)="EmettinascondiInserimento(false)">Esci</button>
 </div>

@@ -17,8 +17,8 @@ export class RicercaComponent implements OnInit {
   @Input() vediRicercaLibero: boolean = false;
   @Input() occorrenze: number = 0;
 
-  //occorrenze: any = '';
-  cercato: AutoriLibri = new AutoriLibri('', '', '', '');
+  cercato: AutoriLibri[] = [];
+  trovato: AutoriLibri = new AutoriLibri("", "", "", "");
 
   cercaLibro(event: KeyboardEvent) {
     this.bs.getData().subscribe({
@@ -26,7 +26,7 @@ export class RicercaComponent implements OnInit {
         const risposta = ajaxRes.response;
         const data = JSON.parse(risposta);
         this.cercato = data.filter(
-          (libro: any) =>
+          (libro: AutoriLibri) =>
             libro.autore.toLowerCase().includes((event.target as HTMLInputElement).value) ||
             libro.titolo.toLowerCase().includes((event.target as HTMLInputElement).value)
         );
@@ -36,6 +36,8 @@ export class RicercaComponent implements OnInit {
         if(Object.keys(this.cercato).length == 1) {
           this.vediRicercaLibero = true;
           this.vediRicerca = false;
+          this.trovato = this.cercato[0];
+          console.log(this.trovato);
         }
       },
     });

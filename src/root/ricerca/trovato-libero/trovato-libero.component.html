@@ -1,13 +1,13 @@
 <div *ngIf = "occorrenze == 1">
   <h2>Titolo del libro</h2>
-  <p>Autore: <b>{{ cercato[0].autore }}</b></p>
-  <p>Titolo: <b>{{ cercato[0].titolo }}</b></p>
-  <p>Posizione: <b>{{ cercato[0].posizione }}</b></p>
+  <p>Autore: <b>{{ trovato.autore }}</b></p>
+  <p>Titolo: <b>{{ trovato.titolo }}</b></p>
+  <p>Posizione: <b>{{ trovato.posizione }}</b></p>
   <h3>Prestito</h3>
   <p>Nominativo: <input type="text"></p>
-  <button>Presta</button>
+  <button (click)="prestaLibro()">Presta</button>
   <h3>Rimozione</h3>
-  <button (click)="funzioneProva()">Rimuovi</button>
+  <button>Rimuovi</button>
   <br>
   <br>
 </div>

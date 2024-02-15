@@ -1,9 +1,14 @@
 <div>
-  <hr>
+  <hr />
   <h2>Ricerca di un documento</h2>
-  <input type="text" (keyup)="cercaLibro($event)">
-  <p *ngIf = "occorrenze !== 0">Trovati {{ occorrenze }} libri</p>
-  <br>
-  <app-trovato-libero [occorrenze]="occorrenze" [trovato]="trovato" [vediRicercaLibero]="vediRicercaLibero"></app-trovato-libero>
+  <input type="text" (keyup)="cercaLibro($event)" />
+  <p *ngIf="occorrenze !== 0">Trovati {{ occorrenze }} libri</p>
+  <br />
+  <app-trovato-libero
+    [occorrenze]="occorrenze"
+    [trovato]="trovato"
+    [vediRicercaLibero]="vediRicercaLibero"
+    (eventoNominativo)="prestaLibro($event)"
+  ></app-trovato-libero>
   <button (click)="EmettiNascondiRicerca(false)">Esci</button>
 </div>

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AutoriLibri } from '../../autori-libri';
 
@@ -13,8 +13,11 @@ export class TrovatoLiberoComponent implements OnInit {
   @Input() occorrenze: number = 0;
   @Input() trovato: AutoriLibri = new AutoriLibri("", "", "", "");
   @Input() vediRicercaLibero: boolean = false;
+  @Output() eventoNominativo = new EventEmitter<string>();
 
-  prestaLibro() {}
+  prestaLibro() {
+    this.eventoNominativo.emit("prova di emissione");
+  }
 
   constructor() { }
 

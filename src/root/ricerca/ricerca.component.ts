@@ -49,6 +49,10 @@ export class RicercaComponent implements OnInit {
     this.eventoNascondiRicerca.emit(valore);
   }
 
+  prestaLibro(stringa: string) {
+    console.log(stringa);
+  }
+
 
   constructor(private bs: BibliotecaService) {}
 

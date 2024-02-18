@@ -37,7 +37,6 @@ export class RicercaComponent implements OnInit {
           this.vediRicercaLibero = true;
           this.vediRicerca = false;
           this.trovato = this.cercato[0];
-          console.log(this.trovato);
         }
       },
     });
@@ -51,6 +50,26 @@ export class RicercaComponent implements OnInit {
 
   prestaLibro(stringa: string) {
     console.log(stringa);
+  }
+
+  rimuoviLibro(trovato: AutoriLibri) {
+    this.bs.getData().subscribe({
+      next: (ajaxRes: AjaxResponse<any>) => {
+        const risposta = ajaxRes.response;
+        const data = JSON.parse(risposta);
+        const arrayNuovo = data.filter(
+          (libroDaRimuovere: AutoriLibri) => 
+            !libroDaRimuovere.autore.includes(trovato.autore)
+            &&
+            !libroDaRimuovere.titolo.includes(trovato.titolo)
+            &&
+            !libroDaRimuovere.posizione.includes(trovato.posizione)
+        );
+        this.bs.postData(arrayNuovo).subscribe({
+          next: (x: AjaxResponse<any>) => {},
+        });
+      }
+    });
   }
 
 

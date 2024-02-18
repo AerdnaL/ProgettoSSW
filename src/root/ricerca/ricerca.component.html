@@ -9,6 +9,7 @@
     [trovato]="trovato"
     [vediRicercaLibero]="vediRicercaLibero"
     (eventoNominativo)="prestaLibro($event)"
+    (eventoRimozione)="rimuoviLibro($event)"
   ></app-trovato-libero>
   <button (click)="EmettiNascondiRicerca(false)">Esci</button>
 </div>

@@ -48,8 +48,8 @@ export class RicercaComponent implements OnInit {
     this.eventoNascondiRicerca.emit(valore);
   }
 
-  prestaLibro(stringa: string) {
-    console.log(stringa);
+  prestaLibro(libroDaRimuovere: AutoriLibri) {
+
   }
 
   rimuoviLibro(trovato: AutoriLibri) {

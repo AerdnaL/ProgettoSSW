@@ -60,13 +60,15 @@ export class RicercaComponent implements OnInit {
               libroControllato.titolo.includes(libroDaPrestare.titolo) &&
               libroControllato.posizione.includes(libroDaPrestare.posizione)
             ) {
-              return {...libroControllato, prestito: libroDaPrestare.prestito};
+              return libroControllato = new AutoriLibri(libroControllato.autore, libroControllato.titolo, libroControllato.posizione, libroDaPrestare.prestito);
               } else {
                 return libroControllato;
               }
           }
         );
-        console.log(arrayNuovo);
+        this.bs.postData(arrayNuovo).subscribe({
+          next: (x:AjaxResponse<any>) => {},
+        });
       }
     });
   }

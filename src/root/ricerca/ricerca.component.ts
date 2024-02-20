@@ -2,25 +2,28 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AjaxResponse } from 'rxjs/ajax';
 import { TrovatoLiberoComponent } from './trovato-libero/trovato-libero.component'
+import { TrovatoPrestatoComponent } from './trovato-prestato/trovato-prestato.component';
 import { BibliotecaService } from '../biblioteca.service';
 import { AutoriLibri } from '../autori-libri';
+
 
 @Component({
   selector: 'app-ricerca',
   templateUrl: './ricerca.component.html',
   styleUrls: ['./ricerca.component.css'],
   standalone: true,
-  imports: [CommonModule, TrovatoLiberoComponent],
+  imports: [CommonModule, TrovatoLiberoComponent, TrovatoPrestatoComponent],
 })
 export class RicercaComponent implements OnInit {
   @Input() vediRicerca: boolean = false;
   @Input() vediRicercaLibero: boolean = false;
   @Input() occorrenze: number = 0;
+  @Output() eventoNascondiRicerca = new EventEmitter<boolean>();
 
   cercato: AutoriLibri[] = [];
   trovato: AutoriLibri = new AutoriLibri("", "", "", "");
 
-  cercaLibro(event: KeyboardEvent) {
+  cercaLibro(event: KeyboardEvent) { // Funzionalità Ricerca
     this.bs.getData().subscribe({
       next: (ajaxRes: AjaxResponse<any>) => {
         const risposta = ajaxRes.response;
@@ -42,13 +45,7 @@ export class RicercaComponent implements OnInit {
     });
   }
 
-  @Output() eventoNascondiRicerca = new EventEmitter<boolean>();
-
-  EmettiNascondiRicerca(valore: boolean) {
-    this.eventoNascondiRicerca.emit(valore);
-  }
-
-  prestaLibro(libroDaPrestare: AutoriLibri) {
+  prestaLibro(libroDaPrestare: AutoriLibri) { // Funzionalità Prestito
     this.bs.getData().subscribe({
       next: (ajaxRes: AjaxResponse<any>) => {
         const risposta = ajaxRes.response;
@@ -73,7 +70,32 @@ export class RicercaComponent implements OnInit {
     });
   }
 
-  rimuoviLibro(trovato: AutoriLibri) {
+  restituisciLibro(libroDaRestituire: AutoriLibri) { // Funzionalità Restituzione
+    this.bs.getData().subscribe({
+      next: (ajaxRes: AjaxResponse<any>) => {
+        const risposta = ajaxRes.response;
+        const data = JSON.parse(risposta);
+        const arrayNuovo = data.map(
+          (libroControllato: AutoriLibri) => {
+            if(
+              libroControllato.autore === libroDaRestituire.autore &&
+              libroControllato.titolo === libroDaRestituire.titolo &&
+              libroControllato.posizione === libroDaRestituire.posizione 
+            ) {
+              return libroControllato = new AutoriLibri(libroControllato.autore, libroControllato.titolo, libroControllato.posizione, '');
+              } else {
+                return libroControllato;
+            }
+          }
+        );
+        this.bs.postData(arrayNuovo).subscribe({
+          next: (x:AjaxResponse<any>) => {}
+        });
+      }
+    });
+  }
+
+  rimuoviLibro(trovato: AutoriLibri) { // Funzionalità Rimozione
     this.bs.getData().subscribe({
       next: (ajaxRes: AjaxResponse<any>) => {
         const risposta = ajaxRes.response;
@@ -91,6 +113,9 @@ export class RicercaComponent implements OnInit {
     });
   }
 
+  EmettiNascondiRicerca(valore: boolean) {
+    this.eventoNascondiRicerca.emit(valore);
+  }
 
   constructor(private bs: BibliotecaService) {}
 

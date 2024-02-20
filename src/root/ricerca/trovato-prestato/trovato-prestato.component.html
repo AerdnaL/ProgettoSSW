@@ -1,3 +1,11 @@
-<p>
-trovato-prestato works!
-</p>
+<div *ngIf = "occorrenze == 1 && trovato.prestito !== ''">
+  <h2>Titolo del libro</h2>
+  <p>Autore: <b>{{ trovato.autore }}</b></p>
+  <p>Titolo: <b>{{ trovato.titolo }}</b></p>
+  <p>Posizione: <b>{{ trovato.posizione }}</b></p>
+  <p>Prestato a: <b>{{ trovato.prestito }}</b></p>
+  <h3>Restituzione</h3>
+  <button (click)="restituisciLibro()">Restituisci</button>
+  <br>
+  <br>
+</div>

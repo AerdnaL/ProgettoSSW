@@ -48,8 +48,27 @@ export class RicercaComponent implements OnInit {
     this.eventoNascondiRicerca.emit(valore);
   }
 
-  prestaLibro(libroDaRimuovere: AutoriLibri) {
-
+  prestaLibro(libroDaPrestare: AutoriLibri) {
+    this.bs.getData().subscribe({
+      next: (ajaxRes: AjaxResponse<any>) => {
+        const risposta = ajaxRes.response;
+        const data = JSON.parse(risposta);
+        const arrayNuovo = data.map(
+          (libroControllato: AutoriLibri) => {
+            if(
+              libroControllato.autore.includes(libroDaPrestare.autore) &&
+              libroControllato.titolo.includes(libroDaPrestare.titolo) &&
+              libroControllato.posizione.includes(libroDaPrestare.posizione)
+            ) {
+              return {...libroControllato, prestito: libroDaPrestare.prestito};
+              } else {
+                return libroControllato;
+              }
+          }
+        );
+        console.log(arrayNuovo);
+      }
+    });
   }
 
   rimuoviLibro(trovato: AutoriLibri) {
@@ -59,10 +78,8 @@ export class RicercaComponent implements OnInit {
         const data = JSON.parse(risposta);
         const arrayNuovo = data.filter(
           (libroDaRimuovere: AutoriLibri) => 
-            !libroDaRimuovere.autore.includes(trovato.autore)
-            &&
-            !libroDaRimuovere.titolo.includes(trovato.titolo)
-            &&
+            !libroDaRimuovere.autore.includes(trovato.autore) &&
+            !libroDaRimuovere.titolo.includes(trovato.titolo) &&
             !libroDaRimuovere.posizione.includes(trovato.posizione)
         );
         this.bs.postData(arrayNuovo).subscribe({

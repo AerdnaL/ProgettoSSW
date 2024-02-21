@@ -1,12 +1,11 @@
 <div>
-  <hr>
   <h2>Inserimento di un nuovo documento</h2>
   <p>Autore: <input type="text" [(ngModel)]="inputAutore"></p>
   <p>Titolo: <input type="text" [(ngModel)]="inputTitolo"></p>
   <p>Posizione: <input type="text" [(ngModel)]="inputPosizione">
   <br>
   <br>
-  <button (click)="carica()">Inserisci</button>
+  <button (click)="carica(); EmettinascondiInserimento(false)">Inserisci</button>
   <br>
   <br>
   <button (click)="EmettinascondiInserimento(false)">Esci</button>

@@ -15,6 +15,7 @@ import { BibliotecaService } from './biblioteca.service';
 export class RootComponent implements OnInit {
   vediRicerca?: boolean;
   vediInserimento?: boolean;
+  vediHome?: boolean;
 
   mostraInserimento() {
     this.vediInserimento = true;

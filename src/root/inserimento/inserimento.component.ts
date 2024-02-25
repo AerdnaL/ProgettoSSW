@@ -32,15 +32,18 @@ export class InserimentoComponent implements OnInit {
         data.push(inserisciLibro);
         this.bs.postData(data).subscribe({
           next: (x: AjaxResponse<any>) => {},
+          error: (err) =>
+            console.error('Observer got an error: ' + JSON.stringify(err)),
         });
-
-      }
+      },
+      error: (err) =>
+        console.error('Observer got an error: ' + JSON.stringify(err)),
     });
   }
 
   @Output() eventoNascondiInserimento = new EventEmitter<boolean>();
 
-  EmettinascondiInserimento(valore: boolean) {
+  emettiNascondiInserimento(valore: boolean) {
     this.eventoNascondiInserimento.emit(valore);
   }
 

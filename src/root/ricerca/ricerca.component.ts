@@ -33,15 +33,15 @@ export class RicercaComponent implements OnInit {
             libro.autore.toLowerCase().includes((event.target as HTMLInputElement).value) ||
             libro.titolo.toLowerCase().includes((event.target as HTMLInputElement).value)
         );
-
         this.occorrenze = Object.keys(this.cercato).length;
-
         if(Object.keys(this.cercato).length == 1) {
           this.vediRicercaLibero = true;
           this.vediRicerca = false;
           this.trovato = this.cercato[0];
         }
       },
+      error: (err) =>
+        console.error('Observer got an error: ' + JSON.stringify(err)),
     });
   }
 
@@ -53,9 +53,9 @@ export class RicercaComponent implements OnInit {
         const arrayNuovo = data.map(
           (libroControllato: AutoriLibri) => {
             if(
-              libroControllato.autore.includes(libroDaPrestare.autore) &&
-              libroControllato.titolo.includes(libroDaPrestare.titolo) &&
-              libroControllato.posizione.includes(libroDaPrestare.posizione)
+              libroControllato.autore === libroDaPrestare.autore &&
+              libroControllato.titolo === libroDaPrestare.titolo &&
+              libroControllato.posizione === libroDaPrestare.posizione
             ) {
               return libroControllato = new AutoriLibri(libroControllato.autore, libroControllato.titolo, libroControllato.posizione, libroDaPrestare.prestito);
               } else {
@@ -64,9 +64,13 @@ export class RicercaComponent implements OnInit {
           }
         );
         this.bs.postData(arrayNuovo).subscribe({
-          next: (x:AjaxResponse<any>) => {},
+          next: () => {},
+          error: (err) =>
+            console.error('Observer got an error: ' + JSON.stringify(err)),
         });
-      }
+      },
+      error: (err) =>
+        console.error('Observer got an error: ' + JSON.stringify(err)),
     });
   }
 
@@ -89,9 +93,13 @@ export class RicercaComponent implements OnInit {
           }
         );
         this.bs.postData(arrayNuovo).subscribe({
-          next: (x:AjaxResponse<any>) => {}
+          next: () => {},
+          error: (err) =>
+            console.error('Observer got an error: ' + JSON.stringify(err)),
         });
-      }
+      },
+      error: (err) =>
+        console.error('Observer got an error: ' + JSON.stringify(err)),
     });
   }
 
@@ -102,18 +110,22 @@ export class RicercaComponent implements OnInit {
         const data = JSON.parse(risposta);
         const arrayNuovo = data.filter(
           (libroDaRimuovere: AutoriLibri) => 
-            !libroDaRimuovere.autore.includes(trovato.autore) &&
-            !libroDaRimuovere.titolo.includes(trovato.titolo) &&
-            !libroDaRimuovere.posizione.includes(trovato.posizione)
+            libroDaRimuovere.autore !== trovato.autore &&
+            libroDaRimuovere.titolo !== trovato.titolo &&
+            libroDaRimuovere.posizione !== trovato.posizione
         );
         this.bs.postData(arrayNuovo).subscribe({
-          next: (x: AjaxResponse<any>) => {},
+          next: () => {},
+          error: (err) =>
+            console.error('Observer got an error: ' + JSON.stringify(err)),
         });
-      }
+      },
+      error: (err) =>
+        console.error('Observer got an error: ' + JSON.stringify(err)),
     });
   }
 
-  EmettiNascondiRicerca(valore: boolean) {
+  emettiNascondiRicerca(valore: boolean) {
     this.eventoNascondiRicerca.emit(valore);
   }
 

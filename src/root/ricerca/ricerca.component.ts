@@ -5,6 +5,7 @@ import { TrovatoLiberoComponent } from './trovato-libero/trovato-libero.componen
 import { TrovatoPrestatoComponent } from './trovato-prestato/trovato-prestato.component';
 import { BibliotecaService } from '../biblioteca.service';
 import { AutoriLibri } from '../autori-libri';
+import { switchMap } from 'rxjs';
 
 
 @Component({
@@ -30,8 +31,8 @@ export class RicercaComponent implements OnInit {
         const data = JSON.parse(risposta);
         this.cercato = data.filter(
           (libro: AutoriLibri) =>
-            libro.autore.toLowerCase().includes((event.target as HTMLInputElement).value) ||
-            libro.titolo.toLowerCase().includes((event.target as HTMLInputElement).value)
+            libro.autore && libro.autore.toLowerCase().includes((event.target as HTMLInputElement).value) ||
+            libro.titolo && libro.titolo.toLowerCase().includes((event.target as HTMLInputElement).value)
         );
         this.occorrenze = Object.keys(this.cercato).length;
         if(Object.keys(this.cercato).length == 1) {
@@ -45,31 +46,32 @@ export class RicercaComponent implements OnInit {
     });
   }
 
-  prestaLibro(libroDaPrestare: AutoriLibri) { // Funzionalità Prestito
-    this.bs.getData().subscribe({
-      next: (ajaxRes: AjaxResponse<any>) => {
+  prestaLibro(libroDaPrestare: AutoriLibri) {
+    this.bs.getData().pipe(
+      switchMap((ajaxRes) => {
         const risposta = ajaxRes.response;
         const data = JSON.parse(risposta);
-        const arrayNuovo = data.map(
-          (libroControllato: AutoriLibri) => {
-            if(
-              libroControllato.autore === libroDaPrestare.autore &&
-              libroControllato.titolo === libroDaPrestare.titolo &&
-              libroControllato.posizione === libroDaPrestare.posizione
-            ) {
-              return libroControllato = new AutoriLibri(libroControllato.autore, libroControllato.titolo, libroControllato.posizione, libroDaPrestare.prestito);
-              } else {
-                return libroControllato;
-              }
+        const arrayNuovo = data.map((libroControllato: AutoriLibri) => {
+          if(
+            libroControllato.autore === libroDaPrestare.autore &&
+            libroControllato.titolo === libroDaPrestare.titolo &&
+            libroControllato.posizione === libroDaPrestare.posizione
+          ) {
+            return new AutoriLibri (
+              libroControllato.autore,
+              libroControllato.titolo,
+              libroControllato.posizione,
+              libroDaPrestare.prestito
+            );
+          } else {
+            return libroControllato;
           }
-        );
-        this.bs.postData(arrayNuovo).subscribe({
-          next: () => {},
-          error: (err) =>
-            console.error('Observer got an error: ' + JSON.stringify(err)),
         });
-      },
-      error: (err) =>
+        return this.bs.postData(arrayNuovo);
+      })
+    ).subscribe({
+      next: () => {},
+      error: (err) => 
         console.error('Observer got an error: ' + JSON.stringify(err)),
     });
   }

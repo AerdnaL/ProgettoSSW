@@ -4,6 +4,7 @@ import { AjaxResponse } from 'rxjs/ajax';
 import { BibliotecaService } from '../biblioteca.service';
 import { AutoriLibri } from '../autori-libri';
 import { FormsModule } from '@angular/forms';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-inserimento',
@@ -19,25 +20,23 @@ export class InserimentoComponent implements OnInit {
   inputPosizione: string = '';
 
   carica() {
-    this.bs.getData().subscribe({
-      next: (ajaxRes: AjaxResponse<any>) => {
+    this.bs.getData().pipe(
+      switchMap((ajaxRes) => {
         const risposta = ajaxRes.response;
         const data = JSON.parse(risposta);
-        let inserisciLibro: AutoriLibri = new AutoriLibri(
+        let libroNuovo: AutoriLibri = new AutoriLibri(
           this.inputAutore,
           this.inputTitolo,
           this.inputPosizione,
           ''
         );
-        data.push(inserisciLibro);
-        this.bs.postData(data).subscribe({
-          next: (x: AjaxResponse<any>) => {},
-          error: (err) =>
-            console.error('Observer got an error: ' + JSON.stringify(err)),
-        });
-      },
+        data.push(libroNuovo);
+        return this.bs.postData(data);
+      })
+    ).subscribe({
+      next: () => {},
       error: (err) =>
-        console.error('Observer got an error: ' + JSON.stringify(err)),
+        console.error('Observer carica got an error ' + err),
     });
   }
 

@@ -7,13 +7,10 @@
     [occorrenze]="occorrenze"
     [trovato]="trovato"
     [vediRicercaLibero]="vediRicercaLibero"
-    (eventoNominativo)="prestaLibro($event)"
-    (eventoRimozione)="rimuoviLibro($event)"
   ></app-trovato-libero>
   <app-trovato-prestato
     [occorrenze]="occorrenze"
     [trovato]="trovato"
-    (eventoRestituzione)="restituisciLibro($event)"
   ></app-trovato-prestato>
   <button (click)="emettiNascondiRicerca(false)">Esci</button>
 </div>

@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { switchMap } from 'rxjs';
 import { AutoriLibri } from '../../autori-libri';
+import { BibliotecaService } from '../../biblioteca.service';
 
 @Component({
   selector: 'app-trovato-prestato',
@@ -16,16 +18,37 @@ export class TrovatoPrestatoComponent implements OnInit {
 
   libroDaRestituire: AutoriLibri = this.trovato;
 
-  restituisciLibro() {
-    this.libroDaRestituire.autore = this.trovato.autore;
-    this.libroDaRestituire.titolo = this.trovato.titolo;
-    this.libroDaRestituire.posizione = this.trovato.posizione;
-    this.libroDaRestituire.prestito = '';
-    
-    this.eventoRestituzione.emit(this.libroDaRestituire);
+  restituisciLibro() { // Funzionalità Restituzione
+    this.bs.getData().pipe(
+      switchMap((ajaxRes) => {
+        const risposta = ajaxRes.response;
+        const data = JSON.parse(risposta);
+        const arrayNuovo = data.map((libroControllato: AutoriLibri) => {
+          if(
+            libroControllato.autore === this.trovato.autore &&
+            libroControllato.titolo === this.trovato.titolo &&
+            libroControllato.posizione === this.trovato.posizione
+          ) {
+            return new AutoriLibri (
+              libroControllato.autore,
+              libroControllato.titolo,
+              libroControllato.posizione,
+              ''
+            );
+          } else {
+            return libroControllato;
+          }
+        });
+        return this.bs.postData(arrayNuovo);
+      })
+    ).subscribe({
+      next: () => {},
+      error: (err) =>
+        console.error('Observer got an error: ' + JSON.stringify(err)),
+    });
   }
 
-  constructor() { }
+  constructor(private bs: BibliotecaService) { }
 
   ngOnInit() {
   }

@@ -5,7 +5,6 @@ import { TrovatoLiberoComponent } from './trovato-libero/trovato-libero.componen
 import { TrovatoPrestatoComponent } from './trovato-prestato/trovato-prestato.component';
 import { BibliotecaService } from '../biblioteca.service';
 import { AutoriLibri } from '../autori-libri';
-import { switchMap } from 'rxjs';
 
 
 @Component({
@@ -43,85 +42,6 @@ export class RicercaComponent implements OnInit {
       },
       error: (err) =>
         console.error('Observer got an error: ' + JSON.stringify(err)),
-    });
-  }
-
-  prestaLibro(libroDaPrestare: AutoriLibri) { // Funzionalità Prestito
-    this.bs.getData().pipe(
-      switchMap((ajaxRes) => {
-        const risposta = ajaxRes.response;
-        const data = JSON.parse(risposta);
-        const arrayNuovo = data.map((libroControllato: AutoriLibri) => {
-          if(
-            libroControllato.autore === libroDaPrestare.autore &&
-            libroControllato.titolo === libroDaPrestare.titolo &&
-            libroControllato.posizione === libroDaPrestare.posizione
-          ) {
-            return new AutoriLibri (
-              libroControllato.autore,
-              libroControllato.titolo,
-              libroControllato.posizione,
-              libroDaPrestare.prestito
-            );
-          } else {
-            return libroControllato;
-          }
-        });
-        return this.bs.postData(arrayNuovo);
-      })
-    ).subscribe({
-      next: () => {},
-      error: (err) => 
-        console.error('Observer got an error: ' + JSON.stringify(err)),
-    });
-  }
-
-  restituisciLibro(libroDaRestituire: AutoriLibri) { // Funzionalità Restituzione
-    this.bs.getData().pipe(
-      switchMap((ajaxRes) => {
-        const risposta = ajaxRes.response;
-        const data = JSON.parse(risposta);
-        const arrayNuovo = data.map((libroControllato: AutoriLibri) => {
-          if(
-            libroControllato.autore === libroDaRestituire.autore &&
-            libroControllato.titolo === libroDaRestituire.titolo &&
-            libroControllato.posizione === libroDaRestituire.posizione
-          ) {
-            return new AutoriLibri (
-              libroControllato.autore,
-              libroControllato.titolo,
-              libroControllato.posizione,
-              ''
-            );
-          } else {
-            return libroControllato;
-          }
-        });
-        return this.bs.postData(arrayNuovo);
-      })
-    ).subscribe({
-      next: () => {},
-      error: (err) =>
-        console.error('Observer got an error: ' + JSON.stringify(err)),
-    });
-  }
-
-  rimuoviLibro(libroDaRimuovere: AutoriLibri) { // Funzionalità Rimozione
-    this.bs.getData().pipe(
-      switchMap((ajaxRes) => {
-        const risposta = ajaxRes.response;
-        const data = JSON.parse(risposta);
-        const arrayNuovo = data.filter((libroControllato: AutoriLibri) => 
-          libroControllato.autore !== libroDaRimuovere.autore &&
-          libroControllato.titolo !== libroDaRimuovere.titolo &&
-          libroControllato.posizione !== libroDaRimuovere.posizione
-        );
-        return this.bs.postData(arrayNuovo);
-      })
-    ).subscribe({
-      next: () => {},
-      error: (err) =>
-        console.error('Observer got an error ' + JSON.stringify(err)),
     });
   }
 
